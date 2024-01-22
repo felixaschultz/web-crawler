@@ -1,8 +1,8 @@
-{
-    "version": 2,
-    "routes": [
-      { "src": "/crawler.js", "dest": "/crawler/$1" },
-      { "src": "/crawler.js", "dest": "/crawler/$1" }
-    ]
-}  
-  
+{ 
+	"rewrites": [ 
+		{ 
+			"source": "/(.*)", 
+			"destination": "/crawler/$1"
+		} 
+	] 
+}

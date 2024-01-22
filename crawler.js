@@ -6,6 +6,7 @@ const port = process.env.PORT || 3003
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(express.static("public")) 
 
 app.get("/", (req, res) => {
     res.status(200).send("Hello World");
@@ -53,8 +54,8 @@ app.get("/crawl/site", async (req, res) => {
     }
 })
 
-app.listen(port, () => {
+/* app.listen(port, () => {
     console.log('Server is listening on port https//localhost:' + port);
-});
+}); */
 
-export default app;
+module.exports = app;
