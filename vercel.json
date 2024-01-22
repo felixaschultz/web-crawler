@@ -1,9 +1,8 @@
 {
     "version": 2,
     "routes": [
-      { "src": "/crawler/(.*)", "dest": "/crawler/$1" },
-      { "handle": "filesystem" },
-      { "src": "/(.*)", "dest": "/crawler/$1" }
+      { "src": "/crawler.js", "dest": "/crawler/$1" },
+      { "src": "/crawler.js", "dest": "/crawler/$1" }
     ]
 }  
   
