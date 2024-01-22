@@ -6,7 +6,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get("/crawl-cookie", async (req, res) => {
+app.get("/", (req, res) => {
+    res.status(200).send("Hello World");
+})
+
+app.get("/crawl-cookies", async (req, res) => {
     try{
         const url = "http://" + req.query.url;
         const browser = await puppeteer.launch();

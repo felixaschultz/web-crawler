@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon crawler.js"
+    "start": "nodemon crawler.js",
+    "dev": "nodemon crawler.js",
+    "server": "node server.js"
   },
   "repository": {
     "type": "git",
