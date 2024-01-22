@@ -1,16 +1,11 @@
-/* import express from 'express';
+import express from 'express';
 import cors from 'cors';
-import puppeteer from 'puppeteer'; */
-const express = require('express');
-const cors = require('cors');
-const puppeteer = require('puppeteer');
+import puppeteer from 'puppeteer';
 
 const port = process.env.PORT || 3003
 const app = express();
 app.use(express.json());
 app.use(cors());
-
-
 
 app.get("/", (req, res) => {
     res.status(200).send("Hello World");
