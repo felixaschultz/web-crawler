@@ -3,7 +3,7 @@
     "routes": [
       { "src": "/crawler/(.*)", "dest": "/crawler/$1" },
       { "handle": "filesystem" },
-      { "src": "/.*", "dest": "/crawler" }
+      { "src": "/(.*)", "dest": "/crawler/$1" }
     ]
-  }
+}  
   

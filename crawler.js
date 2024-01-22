@@ -44,3 +44,5 @@ app.get("/crawl/site", async (req, res) => {
 app.listen(port, () => {
     console.log('Server is listening on port https//localhost:' + port);
 });
+
+module.exports = app;
