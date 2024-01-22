@@ -1,12 +1,9 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "src": "./crawler.js",
-            "use": "@vercel/node"
-        }
-    ],
-    "rewrites": [
-        { "source": "/crawler(.*)", "destination": "/" }
+    "routes": [
+      { "src": "/crawler/(.*)", "dest": "/crawler/$1" },
+      { "handle": "filesystem" },
+      { "src": "/.*", "dest": "/crawler" }
     ]
-}
+  }
+  

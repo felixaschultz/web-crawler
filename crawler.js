@@ -2,15 +2,18 @@ import express from 'express';
 import cors from 'cors';
 import puppeteer from 'puppeteer';
 
+const port = process.env.PORT || 3003
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+
 
 app.get("/", (req, res) => {
     res.status(200).send("Hello World");
 })
 
-app.get("/crawl-cookies", async (req, res) => {
+app.get("/crawl", async (req, res) => {
     try{
         const url = "http://" + req.query.url;
         const browser = await puppeteer.launch();
@@ -25,7 +28,7 @@ app.get("/crawl-cookies", async (req, res) => {
     }
 });
 
-app.get("/crawl", async (req, res) => {
+app.get("/crawl/site", async (req, res) => {
     try{
         const url = "http://" + req.query.url;
         const browser = await puppeteer.launch();
@@ -40,6 +43,6 @@ app.get("/crawl", async (req, res) => {
     }
 })
 
-app.listen(3003, () => {
-    console.log('Server is listening on port https//localhost:3003');
+app.listen(port, () => {
+    console.log('Server is listening on port https//localhost:' + port);
 });

@@ -10,7 +10,7 @@ function App() {
     const website = document.getElementById('website');
     document.getElementById('website').innerHTML = '<h2 style="grid-column: 1/3">Loading...</h2>';
     if(type === 'cookie'){
-      fetch(`http://localhost:3003/crawl-cookie?url=${url}`)
+      fetch(`http://localhost:3003/crawl?url=${url}`)
       .then(res => res.json())
       .then(data => {
         if(data.message){
@@ -34,7 +34,7 @@ function App() {
         });
       });
     }else if(type === 'content'){
-      fetch(`http://localhost:3003/crawl?url=${url}`)
+      fetch(`http://localhost:3003/crawl/site?url=${url}`)
       .then(res => res.text())
       .then(data => {
         const website = document.getElementById('website');
