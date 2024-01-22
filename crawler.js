@@ -15,8 +15,6 @@ app.get("/crawl", async (req, res) => {
     let url = req.query.url;
     if(!req.query.url) res.status(400).json({message: "URL is required"});
 
-    console.log(req.query.url.includes("https://"));
-
     try{
         if(url.includes("https://") || url.includes("http://")){
             url = req.query.url
@@ -36,8 +34,13 @@ app.get("/crawl", async (req, res) => {
 });
 
 app.get("/crawl/site", async (req, res) => {
+    let url = req.query.url;
     try{
-        const url = "http://" + req.query.url;
+        if(url.includes("https://") || url.includes("http://")){
+            url = req.query.url
+        }else{
+            url = "http://" + req.query.url
+        }
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.goto(url, { waitUntil: 'load', timeout: 0 });
