@@ -7,7 +7,7 @@ function App() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch(`http://localhost:3002/crawl?url=${url}`)
+    fetch(`http://localhost:3003/crawl?url=${url}`)
       .then(res => res.text())
       .then(data => {
         document.getElementById('website').innerHTML = data;
