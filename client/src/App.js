@@ -8,9 +8,24 @@ function App() {
     e.preventDefault();
 
     fetch(`http://localhost:3003/crawl?url=${url}`)
-      .then(res => res.text())
+      .then(res => res.json())
       .then(data => {
-        document.getElementById('website').innerHTML = data;
+        const website = document.getElementById('website');
+        website.innerHTML = `<h2>${url}</h2>`;
+        data.forEach(cookie => {
+          website.innerHTML += `
+            <div>
+              <h3>${cookie.name}</h3>
+              <p>Value: ${cookie.value}</p>
+              <p>Domain: ${cookie.domain}</p>
+              <p>Path: ${cookie.path}</p>
+              <p>Expires: ${cookie.expires}</p>
+              <p>Size: ${cookie.size}</p>
+              <p>HttpOnly: ${cookie.httpOnly}</p>
+              <p>Secure: ${cookie.secure}</p>
+              <p>Session: ${cookie.session}</p>
+            </div>`;
+        });
       });
   }
 

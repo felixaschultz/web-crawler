@@ -12,9 +12,10 @@ app.get("/crawl", async (req, res) => {
     const page = await browser.newPage();
     await page.goto(url);
     const cookies = await page.cookies();
+    const title = await page.title();
     await browser.close();
-    res.json(cookies);
-    
+    console.log(title);
+    res.status(200).json(cookies);
 });
 
 app.listen(3003, () => {
