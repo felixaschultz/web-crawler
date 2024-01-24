@@ -27,8 +27,9 @@ app.get("/crawl", async (req, res) => {
         }
         const browser = await puppeteer.launch();
         const context = await browser.createIncognitoBrowserContext();
-
+        
         const page = await context.newPage();
+        const client = await page.target().createCDPSession();
         await page.goto(url, { waitUntil: 'load', timeout: 0 });
         let cookies = [];
         let cookieCheck = false;
@@ -45,7 +46,7 @@ app.get("/crawl", async (req, res) => {
             }
         }
 
-        cookies.push(await page.cookies());
+        cookies = await client.send('Network.getAllCookies');
         cookies = cookies.flat();
         console.log('Cookies:', cookies);
 
