@@ -14,7 +14,10 @@ app.get("/", (req, res) => {
 
 app.get("/crawl", async (req, res) => {
     let url = req.query.url;
+    let acceptAll = req.query.acceptAll;
     if(!req.query.url) res.status(400).json({message: "URL is required"});
+
+    console.log(acceptAll);
 
     try{
         if(url.includes("https://") || url.includes("http://")){
@@ -23,10 +26,27 @@ app.get("/crawl", async (req, res) => {
             url = "http://" + req.query.url
         }
         const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.goto(url, { waitUntil: 'load', timeout: 0 });
-        const cookies = await page.cookies();
+        const context = await browser.createIncognitoBrowserContext();
 
+        const page = await context.newPage();
+        await page.goto(url, { waitUntil: 'load', timeout: 0 });
+        let cookies = [];
+        let cookieCheck = false;
+        if(acceptAll !== 'false'){
+            let cookieBanner = await page.waitForSelector('.intastellarCookieSettings--acceptAll', { waitUntil: 'load', timeout: 120000 });
+            if(!cookieBanner){
+                cookieBanner = await page.waitForSelector('[data-cookiebanner=accept_button]', { waitUntil: 'load', timeout: 0 });
+            }
+            if(cookieBanner){
+                await cookieBanner.click();
+                await cookieBanner.dispose();
+                await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+                cookieCheck = true;
+            }
+        }
+
+        cookies.push(await page.cookies());
+        cookies = cookies.flat();
         console.log('Cookies:', cookies);
 
         await browser.close();
