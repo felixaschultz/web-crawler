@@ -47,7 +47,7 @@ app.get("/crawl", async (req, res) => {
         }
 
         cookies = await client.send('Network.getAllCookies');
-        cookies = cookies.flat();
+        /* cookies = cookies.flat(); */
         console.log('Cookies:', cookies);
 
         await browser.close();
