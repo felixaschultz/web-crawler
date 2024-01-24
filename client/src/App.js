@@ -25,7 +25,7 @@ function App() {
               <p>Value: ${cookie.value}</p>
               <p>Domain: ${cookie.domain}</p>
               <p>Path: ${cookie.path}</p>
-              <p>Expires: ${new Date(cookie.expires).toUTCString()}</p>
+              <p>Expires: ${cookie.expires}</p>
               <p>Size: ${cookie.size}</p>
               <p>HttpOnly: ${cookie.httpOnly}</p>
               <p>Secure: ${cookie.secure}</p>

@@ -26,6 +26,9 @@ app.get("/crawl", async (req, res) => {
         const page = await browser.newPage();
         await page.goto(url, { waitUntil: 'load', timeout: 0 });
         const cookies = await page.cookies();
+
+        console.log('Cookies:', cookies);
+
         await browser.close();
         res.status(200).json(cookies);
     }
@@ -54,8 +57,8 @@ app.get("/crawl/site", async (req, res) => {
     }
 })
 
-/* app.listen(port, () => {
+app.listen(port, () => {
     console.log('Server is listening on port https//localhost:' + port);
-}); */
+});
 
-module.exports = app;
+export default app;
