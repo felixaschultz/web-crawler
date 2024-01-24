@@ -20,14 +20,20 @@ function App() {
         }
         website.innerHTML = `<h2 style="grid-column: 1/2">${url}</h2>`;
         website.innerHTML += `<p style="grid-column: 2/3">Found ${data.length} cookies</p>`;
+        
         data?.forEach(cookie => {
+          const date = new Date(cookie.expires * 1000);
+          const year = date.getFullYear();
+          const month = date.getMonth() + 1;
+          const day = date.getDate();
+          const expires = `${day}. ${month} ${year}`;
           website.innerHTML += `
             <div>
               <h3>${cookie.name}</h3>
               <p>Value: ${cookie.value}</p>
               <p>Domain: ${cookie.domain}</p>
               <p>Path: ${cookie.path}</p>
-              <p>Expires: ${cookie.expires}</p>
+              <p>Expires: ${expires}</p>
               <p>Size: ${cookie.size}</p>
               <p>HttpOnly: ${cookie.httpOnly}</p>
               <p>Secure: ${cookie.secure}</p>
