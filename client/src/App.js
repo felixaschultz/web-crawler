@@ -4,20 +4,22 @@ import { useState } from 'react';
 function App() {
   const [url, setUrl] = useState('');
   const [type, setType] = useState('cookie');
+  const [allCookies, setAllCookies] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
     const website = document.getElementById('website');
     document.getElementById('website').innerHTML = '<h2 style="grid-column: 1/3">Loading...</h2>';
     if(type === 'cookie'){
-      fetch(`http://localhost:3003/crawl?url=${url}`)
+      fetch(`http://localhost:3003/crawl?url=${url}&acceptAll=${allCookies}`)
       .then(res => res.json())
       .then(data => {
         if(data.message){
           website.innerHTML = `<h2 style="grid-column: 1/3">${data.message}</h2>`;
           return;
         }
-        website.innerHTML = `<h2 style="grid-column: 1/3">${url}</h2>`;
+        website.innerHTML = `<h2 style="grid-column: 1/2">${url}</h2>`;
+        website.innerHTML += `<p style="grid-column: 2/3">Found ${data.length} cookies</p>`;
         data?.forEach(cookie => {
           website.innerHTML += `
             <div>
@@ -58,9 +60,13 @@ function App() {
             <option value="content">Content</option>
           </select>
         </label>
+        <label>
+          Accept All:
+          <input type="checkbox" name="acceptAll" onChange={(e) => setAllCookies(e.target.checked)} />
+        </label>
         <button type="submit" onClick={handleSubmit}>Crawl</button>
       </form>
-      <div id="website" style={{display: "grid", gridTemplateColumns: "1fr 1fr"}}></div>
+      <div id="website"></div>
     </>
   );
 }
