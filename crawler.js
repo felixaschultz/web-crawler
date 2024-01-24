@@ -48,10 +48,10 @@ app.get("/crawl", async (req, res) => {
 
         cookies = await client.send('Network.getAllCookies');
         /* cookies = cookies.flat(); */
-        console.log('Cookies:', cookies);
+        console.log('Cookies:', cookies.cookies);
 
         await browser.close();
-        res.status(200).json(cookies);
+        res.status(200).json(cookies.cookies);
     }
     catch(err){
         res.status(500).json({message: err.message});
