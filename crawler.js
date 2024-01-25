@@ -37,7 +37,7 @@ app.get("/crawl", async (req, res) => {
         await page.goto(url, { waitUntil: 'load', timeout: 0 });
         let cookies = [];
         
-        const selectors = ['.intastellarCookieSettings--acceptAll', '#coiOverlay button.coi-banner__accept'];
+        const selectors = ['.intastellarCookieSettings--acceptAll', '#coiOverlay button.coi-banner__accept', '#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll'];
         if(acceptAll === 'true'){
             const promises = selectors.map(async (selector) => {
                 try {
