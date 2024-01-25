@@ -29,24 +29,44 @@ app.get("/crawl", async (req, res) => {
         const context = await browser.createIncognitoBrowserContext();
         
         const page = await context.newPage();
+        page.setUserAgent('Intastellar Cookiebot', {
+            architecture: 'INTASTELLAR_COOKIEBOT_V1',
+            mobile: false,
+        });
         const client = await page.target().createCDPSession();
         await page.goto(url, { waitUntil: 'load', timeout: 0 });
         let cookies = [];
-        let cookieCheck = false;
-        if(acceptAll !== 'false'){
-            let cookieBanner = await page.waitForSelector('.intastellarCookieSettings--acceptAll', { waitUntil: 'load', timeout: 120000 });
-            if(!cookieBanner){
-                cookieBanner = await page.waitForSelector('[data-cookiebanner=accept_button]', { waitUntil: 'load', timeout: 0 });
-            }
-            if(cookieBanner){
-                await cookieBanner.click();
-                await cookieBanner.dispose();
-                await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
-                cookieCheck = true;
-            }
-        }
+        
+        const selectors = ['.intastellarCookieSettings--acceptAll', '#coiOverlay button.coi-banner__accept'];
+        if(acceptAll === 'true'){
+            const promises = selectors.map(async (selector) => {
+                try {
+                    /* await page.waitForNavigation({ waitUntil: 'load', timeout: 0 }); */
+                    await page.waitForSelector(selector, {waitUntil: 'load', timeout: 0 });
 
-        cookies = await client.send('Network.getAllCookies');
+                    /* try{ */
+                        await page.$(selector);
+                        await page.click(selector);
+                    /* }catch(err){
+                        console.log(err);
+                    } */
+                   // console.error(`Selector '${selector}' not found within the specified timeout.`);
+                    /* return { selector, status: 'rejected', error: error.message }; */
+                    
+                } catch (error) {
+                    console.error(`Selector '${selector}': ${error.message}`);
+                    // Handle the case where the selector is not found for this selector
+                    return { selector, status: 'rejected', error: error.message };
+                }
+            });
+            
+            const results = await Promise.allSettled(promises);
+            console.log(results);
+            cookies = await client.send('Network.getAllCookies');
+        }else{
+            cookies = await client.send('Network.getAllCookies');
+        }
+        
         /* cookies = cookies.flat(); */
         console.log('Cookies:', cookies.cookies);
 
