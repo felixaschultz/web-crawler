@@ -1,6 +1,7 @@
 import './App.css';
 import LoadingSpinner from './components/loading/loading';
 import { useState } from 'react';
+import Crawler from './components/crawler';
 
 function App() {
   const [url, setUrl] = useState('');
@@ -9,7 +10,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [cookies, setCookies] = useState();
 
-  function handleSubmit(e) {
+  /* function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
     if(type === 'cookie'){
@@ -27,7 +28,7 @@ function App() {
         
       });
     }
-  }
+  } */
 
  /*  if(!loading){
     console.log(cookies)
@@ -38,45 +39,7 @@ function App() {
 
   return (
     <>
-      <h1>Webcrawler</h1>
-      <form>
-        <label>
-          URL:
-          <input type="text" name="url" onChange={(e) => setUrl(e.target.value)} />
-        </label>
-        <label>
-          Type:
-          <select onChange={(e) => setType(e.target.value)}>
-            <option value="cookie">Cookie</option>
-            <option value="content">Content</option>
-          </select>
-        </label>
-        <label>
-          Accept all cookies:
-          <input type="checkbox" name="acceptAll" onChange={(e) => setAllCookies(e.target.checked)} />
-        </label>
-        <button type="submit" onClick={handleSubmit}>Crawl</button>
-      </form>
-      {(!loading) ? cookies?.map(cookie => {
-          const date = new Date(cookie.expires * 1000);
-          const year = date.getFullYear();
-          const month = date.getMonth() + 1;
-          const day = date.getDate();
-          const expires = `${day}. ${month} ${year}`;
-          return <>
-            <div>
-              <h3>{cookie.name}</h3>
-              <p>Value: {cookie.value}</p>
-              <p>Domain: {cookie.domain}</p>
-              <p>Path: {cookie.path}</p>
-              <p>Expires: {expires}</p>
-              <p>Size: {cookie.size}</p>
-              <p>HttpOnly: {cookie.httpOnly}</p>
-              <p>Secure: {cookie.secure}</p>
-              <p>Session: {cookie.session}</p>
-            </div>
-            </>;
-        }) : <LoadingSpinner />}
+      <Crawler />
     </>
   );
 }

@@ -1,0 +1,45 @@
+.crawler-intro{
+    text-align: center;
+    line-height: .5em;
+}
+.crawler-form{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #8e8e8e;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.crawl-cta{
+    padding: 16px 35px;
+    border: none;
+    border-radius: 5px;
+    background-color: #dcbf00;
+    width: max-content;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+@media screen and (max-width: 768px){
+    .crawler-form{
+        flex-direction: column;
+    }
+    .crawl-cta{
+        margin-left: 0;
+        margin-top: 5px;
+        width: 100%;
+    }
+
+    .crawler-intro{
+        line-height: 1.5em;
+    }
+    
+}
