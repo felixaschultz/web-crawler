@@ -26,8 +26,9 @@ export default function Table(props){
                                 const expires = (d.session) ? "Session" : `${day}/${month}/${year}`;
                                 return <>
                                     <div className="table-cell" key={i}>{d.name}</div>
-                                    <div className="table-cell" key={i}>{expires}</div>
                                     <div className="table-cell" key={i+1}>{d.domain}</div>
+                                    <div className="table-cell" key={i+1}>{d.value}</div>
+                                    <div className="table-cell" key={i}>{expires}</div>
                                 </>
                             })
                         }
