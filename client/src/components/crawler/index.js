@@ -66,7 +66,7 @@ export default function Crawler(){
             {loading && <LoadingSpinner />}
             {!loading && data !== "Err_Development_Only" && data?.length - 1 > 0 && <>
                 <h3>First party & third party Cookies found on {fetchedWebsites.replace("https://", "").replace("http://", "").replace("www.", "")}</h3>
-                <Table headers={["Name", "Expire", "Domain"]} data={data} />
+                <Table headers={["Name", "Domain", "Value", "Expire"]} data={data} />
             </>
             }
         </div>
