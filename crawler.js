@@ -17,8 +17,6 @@ app.get("/crawl", async (req, res) => {
     let acceptAll = req.query.acceptAll;
     if(!req.query.url) res.status(400).json({message: "URL is required"});
 
-    console.log(acceptAll);
-
     try{
         if(url.includes("https://") || url.includes("http://")){
             url = req.query.url
@@ -29,15 +27,22 @@ app.get("/crawl", async (req, res) => {
         const context = await browser.createIncognitoBrowserContext();
         
         const page = await context.newPage();
-        page.setUserAgent('Intastellar Cookiebot', {
+        /* page.setUserAgent('Intastellar Cookiebot', {
             architecture: 'INTASTELLAR_COOKIEBOT_V1',
             mobile: false,
-        });
+        }); */
         const client = await page.target().createCDPSession();
         await page.goto(url, { waitUntil: 'load', timeout: 0 });
         let cookies = [];
         
-        const selectors = ['.intastellarCookieSettings--acceptAll', '#coiOverlay button.coi-banner__accept', '#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll'];
+        const selectors = [
+            '.intastellarCookieSettings--acceptAll',
+            '#coiOverlay button.coi-banner__accept',
+            '#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll',
+            '#CybotCookiebotDialogBodyLevelButtonAcceptAll',
+            '#onetrust-accept-btn-handler',
+            '.didomi-notice-agree-button'           
+        ];
         if(acceptAll === 'true'){
             const promises = selectors.map(async (selector) => {
                 try {
